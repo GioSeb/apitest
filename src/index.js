@@ -16,7 +16,7 @@ mongoose.connect(url, {
 
 });
 
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
 
 //settings
 app.set('port', process.env.PORT || 3000);
@@ -32,7 +32,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize);
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash())
 
