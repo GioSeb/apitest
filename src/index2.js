@@ -6,32 +6,24 @@ const http = require('http')
 app.use(express.json())
 
 let personas = [{
-    id: 1,
-    nombre: "sebastian",
-    edad: 25,
-    dni: 40513823,
-    mail: "sebastiangioiose@gmail.com"
+    name: "sebastian",
+    mail: "sebastiangioiose@gmail.com",
+    pass: "1234"
 },
 {
-    id: 2,
-    nombre: "hugo",
-    edad: 73,
-    dni: 6151023,
-    mail: "hugogioiose@gmail.com"
+    name: "hugo",
+    mail: "hugogioiose@gmail.com",
+    pass: "4567"
 },
 {
-    id: 3,
-    nombre: "romina",
-    edad: 42,
-    dni: 28945213,
-    mail: "rominagioiose@gmail.com"
+    name: "romina",
+    mail: "rominagioiose@gmail.com",
+    pass: "12345"
 },
 {
-    id: 4,
-    nombre: "carmen",
-    edad: 52,
-    dni: 213057869,
-    mail: "carmendasilva@gmail.com"
+    name: "carmen",
+    mail: "carmendasilva@gmail.com",
+    pass: "4321"
 }]
 
 //const app = http.createServer((req, res) => {

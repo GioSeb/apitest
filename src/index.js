@@ -10,11 +10,9 @@ const cookieParser = require('cookie-Parser');
 const bodyParser = require('body-Parser');
 const session = require('express-session');
 
-const { url } = require('./config/database');
+const database = require('./config/database');
+database();
 
-mongoose.connect(url, {
-
-});
 
 //require('./config/passport')(passport);
 
@@ -22,6 +20,7 @@ mongoose.connect(url, {
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+require("dotenv").config();
 
 //middlewares
 app.use(morgan('dev'));
@@ -36,8 +35,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash())
 
+//global variables
+
 //routes
-require('./routes/routes')(app, passport);
+app.use("/auth", require('./routes/auth-routes'));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
