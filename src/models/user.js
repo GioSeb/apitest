@@ -42,7 +42,7 @@ UserSchema.pre('save', function (next) {
         return next()
     }
 })
-//return boolean if hash = pass
+
 UserSchema.statics.comparePassword = async (password, receivedPassword) => {
     return await bcrypt.compare(password, receivedPassword);
 };
