@@ -1,5 +1,6 @@
 const User = require("../models/user");
 require("dotenv").config();
+const jwt = require('jsonwebtoken');
 
 
 const signup = async (req, res) => {
@@ -9,19 +10,35 @@ const signup = async (req, res) => {
         mail,
         password
     });
+    console.log(name, mail, password);
     try {
         const savedUser = await newUser.save();
+        console.log(savedUser);
+        res.status(200).json({
+            savedUser
+        })
     } catch (error) {
-        res.status(400)
+        res.status(400).json({
+            msg: error
+        })
     }
 };
 
-//userctrl.signin = (req, res) => {
-//    res.send('signin');
-//};
-//
-//userctrl.logout = (req, res) => {
-//    res.send('logout');
-//};
 
-module.exports = {signup};
+const signin = async (req, res) => {
+    const { name, password } = req.body;
+    const user = await User.findOne({ name: name });
+    if (!user) {
+      return res.status(400).json({ msg: "User not found" });
+    }
+    const matchPassword = await User.comparePassword(password, user.password);
+   if (!matchPassword) {
+       return res.status(401).json({ token: null, msg: "Invalid password" });
+    } else {
+      const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {
+        expiresIn: 86400,
+      });
+      res.json({ token: token });
+    }
+  };
+module.exports = {signup, signin};
