@@ -4,6 +4,7 @@ const app = express();
 const morgan = require('morgan');
 
 const database = require('./config/database');
+const logger = require('./logger/logger');
 database();
 
 //settings
@@ -17,6 +18,8 @@ app.use(express.json());
 //routes
 app.use("/auth", require('./routes/auth-routes'));
 
-app.listen(app.get('port'), () => {
-    console.log('server on port', app.get('port'))
+//
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    logger.log('info', `server on port: ${port}`);
 }) ;
