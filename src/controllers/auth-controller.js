@@ -1,6 +1,7 @@
 const User = require("../models/user");
 require("dotenv").config();
 const jwt = require('jsonwebtoken');
+const logger = require("../logger/logger");
 
 
 const signup = async (req, res) => {
@@ -29,6 +30,7 @@ const signin = async (req, res) => {
     const { name, password } = req.body;
     const user = await User.findOne({ name: name });
     if (!user) {
+      logger.error('User not Found');
       return res.status(400).json({ msg: "User not found" });
     }
     const matchPassword = await User.comparePassword(password, user.password);
